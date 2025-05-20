@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: event_postgres_container
+    environment:
+      POSTGRES_DB: eventClean
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5436:5432"
+    restart: always
