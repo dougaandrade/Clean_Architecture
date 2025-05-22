@@ -1,10 +1,10 @@
-package com.example.EventClean.core.entities;
+package com.example.EventClean.infrastructure.dtos;
 
 import java.time.LocalDateTime;
 
 import com.example.EventClean.core.Enums.TipoEvento;
 
-public record EventModel(
+public record EventDto(
         Long id,
         String nome,
         String descricao,
@@ -15,5 +15,4 @@ public record EventModel(
         Integer capacidade,
         String imgUrl,
         TipoEvento tipo) {
-
 }
