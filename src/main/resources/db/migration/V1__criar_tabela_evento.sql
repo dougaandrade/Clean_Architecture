@@ -10,5 +10,6 @@ CREATE TABLE Eventos (
     local_evento VARCHAR(255) NOT NULL,
     capacidade INTEGER NOT NULL,
     organizador VARCHAR(255) NOT NULL,
-    tipo VARCHAR(50) NOT NULL
+    tipo VARCHAR(50) NOT NULL,
+    img_url VARCHAR(255)
 );

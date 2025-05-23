@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "event_tb")
+@Table(name = "eventos")
 
 public class EventEntity {
   @Id
@@ -29,11 +29,13 @@ public class EventEntity {
   private Integer capacidade;
   @Column(name = "img_url")
   private String imgUrl;
+  private String organizador;
   @Enumerated(EnumType.STRING)
   private TipoEvento tipo;
 
   public EventEntity(Long id, String nome, String descricao, String identificador, LocalDateTime dataInicio,
-      LocalDateTime dataFim, String localEvento, Integer capacidade, String imgUrl, TipoEvento tipo) {
+      LocalDateTime dataFim, String localEvento, Integer capacidade, String imgUrl, String organizador,
+      TipoEvento tipo) {
     this.id = id;
     this.nome = nome;
     this.descricao = descricao;
@@ -43,6 +45,7 @@ public class EventEntity {
     this.localEvento = localEvento;
     this.capacidade = capacidade;
     this.imgUrl = imgUrl;
+    this.organizador = organizador;
     this.tipo = tipo;
   }
 
@@ -76,6 +79,10 @@ public class EventEntity {
 
   public void setIdentificador(String identificador) {
     this.identificador = identificador;
+  }
+
+  public String getOrganizador() {
+    return organizador;
   }
 
   public LocalDateTime getDataInicio() {
@@ -124,5 +131,9 @@ public class EventEntity {
 
   public void setTipo(TipoEvento tipo) {
     this.tipo = tipo;
+  }
+
+  public void setOrganizador(String organizador) {
+    this.organizador = organizador;
   }
 }

@@ -19,6 +19,7 @@ public class EventoEntityMapper {
         eventModel.localEvento(),
         eventModel.capacidade(),
         eventModel.imgUrl(),
+        eventModel.organizador(),
         eventModel.tipo());
   }
 
@@ -33,6 +34,7 @@ public class EventoEntityMapper {
         eventEntity.getLocalEvento(),
         eventEntity.getCapacidade(),
         eventEntity.getImgUrl(),
+        eventEntity.getOrganizador(),
         eventEntity.getTipo());
   }
 }

@@ -14,5 +14,6 @@ public record EventDto(
         String localEvento,
         Integer capacidade,
         String imgUrl,
+        String organizador,
         TipoEvento tipo) {
 }
