@@ -31,4 +31,9 @@ public class EventRepositoryGateway implements EventGateway {
     return eventRepository.findAll().stream().map(eventoEntityMapper::toDomain).toList();
   }
 
+  @Override
+  public List<EventModel> filtraEventoCase() {
+    return eventRepository.findAll().stream().map(eventoEntityMapper::toDomain).toList();
+  }
+
 }

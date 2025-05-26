@@ -9,4 +9,6 @@ public interface EventGateway {
   EventModel criarEvento(EventModel eventModel);
 
   List<EventModel> buscarEvento();
+
+  List<EventModel> filtraEventoCase();
 }

@@ -49,6 +49,9 @@ public class EventEntity {
     this.tipo = tipo;
   }
 
+  public EventEntity() {
+  }
+
   public Long getId() {
     return id;
   }
@@ -79,10 +82,6 @@ public class EventEntity {
 
   public void setIdentificador(String identificador) {
     this.identificador = identificador;
-  }
-
-  public String getOrganizador() {
-    return organizador;
   }
 
   public LocalDateTime getDataInicio() {
@@ -125,6 +124,14 @@ public class EventEntity {
     this.imgUrl = imgUrl;
   }
 
+  public String getOrganizador() {
+    return organizador;
+  }
+
+  public void setOrganizador(String organizador) {
+    this.organizador = organizador;
+  }
+
   public TipoEvento getTipo() {
     return tipo;
   }
@@ -133,7 +140,4 @@ public class EventEntity {
     this.tipo = tipo;
   }
 
-  public void setOrganizador(String organizador) {
-    this.organizador = organizador;
-  }
 }
