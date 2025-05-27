@@ -1,8 +1,6 @@
 package com.example.EventClean.infrastructure.presentation;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +14,10 @@ import com.example.EventClean.core.entities.EventModel;
 import com.example.EventClean.core.usecases.BuscarEventoCase;
 import com.example.EventClean.core.usecases.CriarEventoCase;
 import com.example.EventClean.core.usecases.FiltrarEventoCase;
+import com.example.EventClean.infrastructure.config.exceptions.ErrorResponse;
 import com.example.EventClean.infrastructure.dtos.EventDto;
 import com.example.EventClean.infrastructure.mapper.EventMapper;
+import com.example.EventClean.infrastructure.persistence.EventRepository;
 
 @RestController
 @RequestMapping("api/event/")
@@ -28,25 +28,29 @@ public class EventController {
   private final BuscarEventoCase buscarEventoCase;
   private final FiltrarEventoCase filtrarEventoCase;
   private final EventMapper eventMapper;
+  private final EventRepository eventRepository;
 
   public EventController(CriarEventoCase criarEventoCase, EventMapper eventMapper, BuscarEventoCase buscarEventoCase,
-      FiltrarEventoCase filtrarEventoCase) {
+      FiltrarEventoCase filtrarEventoCase, EventRepository eventRepository) {
     this.criarEventoCase = criarEventoCase;
     this.eventMapper = eventMapper;
     this.buscarEventoCase = buscarEventoCase;
     this.filtrarEventoCase = filtrarEventoCase;
+    this.eventRepository = eventRepository;
   }
 
   @PostMapping("/criar")
-  public ResponseEntity<Map<String, Object>> criarEvento(@RequestBody EventDto eventoDto) {
-    EventModel novoEvento = criarEventoCase.execute(eventMapper.toDomain(eventoDto));
-    Map<String, Object> response = new HashMap<>();
-    response.put("Mensagem: ", "Evento cadastrado com sucesso no nosso banco de dados");
-    response.put("Dados do evento: ", eventMapper.toDto(novoEvento));
-    return ResponseEntity.ok(response);
+  public ResponseEntity<EventDto> criarEvento(@RequestBody EventDto eventoDto) {
+    eventRepository.findByIdentificador(eventoDto.identificador()).ifPresent(e -> {
+      throw new ErrorResponse("Já existe um evento com esse identificador, verifique o identificador");
+    });
+
+    EventModel eventModel = criarEventoCase.execute(eventMapper.toDomain(eventoDto));
+    return ResponseEntity.ok(eventMapper.toDto(eventModel));
+
   }
 
-  @GetMapping("/buscar")
+  @GetMapping("/listar")
   public List<EventDto> buscarEventos() {
     return buscarEventoCase.execute().stream().map(eventMapper::toDto).toList();
   }
@@ -54,7 +58,9 @@ public class EventController {
   @GetMapping("/filtrar/{id}")
   public ResponseEntity<EventDto> filtrarEventos(@PathVariable Long id) {
     return filtrarEventoCase.execute().stream().map(eventMapper::toDto).filter(e -> e.id().equals(id))
-        .findFirst().map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        .findFirst().map(ResponseEntity::ok)
+        .orElseThrow(() -> new ErrorResponse("Evento não encontrado, verifique o id"));
+
   }
 
 }

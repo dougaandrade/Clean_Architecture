@@ -1,4 +1,4 @@
-package com.example.EventClean.infrastructure.beans;
+package com.example.EventClean.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
