@@ -19,9 +19,11 @@ import com.example.EventClean.infrastructure.dtos.EventDto;
 import com.example.EventClean.infrastructure.mapper.EventMapper;
 import com.example.EventClean.infrastructure.persistence.EventRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("api/event/")
-
+@RequiredArgsConstructor
 public class EventController {
 
   private final CriarEventoCase criarEventoCase;
@@ -29,15 +31,6 @@ public class EventController {
   private final FiltrarEventoCase filtrarEventoCase;
   private final EventMapper eventMapper;
   private final EventRepository eventRepository;
-
-  public EventController(CriarEventoCase criarEventoCase, EventMapper eventMapper, BuscarEventoCase buscarEventoCase,
-      FiltrarEventoCase filtrarEventoCase, EventRepository eventRepository) {
-    this.criarEventoCase = criarEventoCase;
-    this.eventMapper = eventMapper;
-    this.buscarEventoCase = buscarEventoCase;
-    this.filtrarEventoCase = filtrarEventoCase;
-    this.eventRepository = eventRepository;
-  }
 
   @PostMapping("/criar")
   public ResponseEntity<EventDto> criarEvento(@RequestBody EventDto eventoDto) {
